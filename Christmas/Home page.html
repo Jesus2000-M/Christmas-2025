@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Christmas Quiz</title>
+  <style>
+    /* ensure full-height background and no unexpected scroll gaps */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      /* background image (place "White Background.jpg" next to this file) */
+      background-image: url("White Background.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      /* allow page content to stack above the ribbon if needed */
+      position: relative;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* left-side decorative ribbon that acts like a border */
+    .left-ribbon {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 120px;      /* ⭐ Reduce the width here */
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+
+    /* optional: if Ribbon.png is very wide, cap its width */
+    @media (min-width: 600px) {
+      .left-ribbon {
+        max-width: 180px;    /* tweak this value if you want narrower/wider */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- decorative image: empty alt because it's purely visual -->
+  <img src="Ribbon.png" class="left-ribbon" alt="" aria-hidden="true">
+</body>
+</html>
+
+
+    
