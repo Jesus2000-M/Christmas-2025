@@ -3,143 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Christmas Welcome</title>
-
+<title>Christmas Website</title>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-
-    body {
+    * {
         margin: 0;
         padding: 0;
-        font-family: "Poppins", sans-serif;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        color: #222;
+        box-sizing: border-box;
+    }
 
-        /* Background Image */
-        background-image: url('Background.png');
+    body {
+        min-height: 100vh;
+        background-image: url('White Background.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: Arial, sans-serif;
+        color: #fff;
+        position: relative;
+    }
+
+    .top-decoration-container {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .top-decoration {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    .content {
+        text-align: center;
+        margin-top: 20px;
     }
 
     h1 {
         font-size: 3rem;
-        font-weight: 800;
-        color: #d40000; /* Soft Christmas Red */
-        margin-bottom: 10px;
+        color: red;
+        text-shadow: 2px 2px 4px #000;
+    }
+
+    p {
+        font-size: 1.5rem;
+        color: green;
     }
 
     #countdown {
+        margin-top: 25px;
         font-size: 2rem;
-        font-weight: 600;
-        color: #0c7a35; /* Soft Christmas Green */
-        margin-top: 15px;
-        letter-spacing: 3px;
+        font-weight: bold;
+        color: red;
+        text-shadow: 1px 1px 3px green;
     }
 
-    .start-btn {
-        margin-top: 35px;
-        padding: 14px 36px;
-        font-size: 1.2rem;
-        font-weight: 600;
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-        background: #d40000;
-        color: white;
-        transition: all 0.2s ease;
+    .gift-left {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 150px;
+        height: auto;
+        z-index: 999;
     }
 
-    .start-btn:hover {
-        background: #b30000;
-        transform: scale(1.05);
-    }
-
-    /* Click animation class */
-    .start-btn.clicked {
-        background: #0c7a35;
-        transform: scale(0.95); /* slight shrink */
-        transition: all 0.15s ease;
-    }
-
-    /* Animate back to normal size quickly */
-    .start-btn.animate {
-        animation: clickBounce 0.3s forwards;
-    }
-
-    @keyframes clickBounce {
-        0% { transform: scale(1); }
-        50% { transform: scale(0.9); }
-        100% { transform: scale(1); }
+    .gift-right {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 150px;
+        height: auto;
+        z-index: 999;
     }
 </style>
 </head>
-
 <body>
 
-<div>
-    <h1>🎄 Merry Christmas 🎄</h1>
+    <div class="top-decoration-container">
+        <img src="decoration.png" alt="Decoration" class="top-decoration">
+    </div>
 
-    <div id="countdown">-- : -- : -- : --</div>
+    <div class="content">
+        <h1>Merry Christmas!</h1>
+        <p>May peace be your gift at christmas and your blessing all year through!</p>
+        <div id="countdown">Loading...</div>
+    </div>
 
-    <button id="startBtn" class="start-btn" onclick="startQuiz()">Start Quiz</button>
-</div>
+    <img src="gift 1.png" alt="Gift 1" class="gift-left">
+    <img src="gift 2.png" alt="Gift 2" class="gift-right">
 
 <script>
-    // SIMPLE COUNTDOWN
     function updateCountdown() {
-        const christmas = new Date("December 25, 2025 00:00:00");
-        const now = new Date();
+        const christmas = new Date("December 25, 2025 00:00:00").getTime();
+        const now = new Date().getTime();
         const diff = christmas - now;
 
         if (diff <= 0) {
-            document.getElementById("countdown").innerHTML =
-                "🎅 It's Christmas Day!";
+            document.getElementById("countdown").innerHTML = "🎄 00 : 00 : 00 : 00 🎅";
             return;
         }
 
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const m = Math.floor((diff / (1000 * 60)) % 60);
-        const s = Math.floor((diff / 1000) % 60);
-
-        const pad = (num) => num.toString().padStart(2, "0");
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
         document.getElementById("countdown").innerHTML =
-            `${pad(d)} : ${pad(h)} : ${pad(m)} : ${pad(s)}`;
+            days + " : " + hours + " : " + minutes + " : " + seconds;
     }
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
-
-    // START QUIZ BUTTON FUNCTION
-    function startQuiz() {
-        const btn = document.getElementById("startBtn");
-
-        // Add click animation
-        btn.classList.add("animate");
-
-        // Change color to green
-        btn.classList.add("clicked");
-
-        // Remove animation class after animation ends
-        setTimeout(() => {
-            btn.classList.remove("animate");
-        }, 300);
-
-        // Redirect to quiz page after short delay
-        setTimeout(() => {
-            window.location.href = "quiz.html";
-        }, 400);
-    }
 </script>
 
 </body>
 </html>
-
-
-
