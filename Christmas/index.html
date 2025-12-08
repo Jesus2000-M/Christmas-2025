@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Christmas Website</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
     * {
         margin: 0;
@@ -12,13 +16,13 @@
     }
 
     body {
-        min-height: 100vh;
+        height: 100vh; /* No scroll */
+        overflow: hidden; /* Hide scroll */
         background-image: url('White Background.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-attachment: fixed;
-        font-family: Arial, sans-serif;
+        font-family: 'Mountains of Christmas', cursive;
         color: #fff;
         position: relative;
     }
@@ -64,23 +68,62 @@
         text-shadow: 1px 1px 3px green;
     }
 
-    .gift-left {
+    /* Start Quiz button with border light */
+    .start-quiz {
+        margin-top: 30px;
+        padding: 15px 40px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: white;
+        background-color: red;
+        border: 3px solid transparent;
+        border-radius: 10px;
+        cursor: pointer;
+        text-shadow: 1px 1px 2px black;
+        transition: all 0.3s ease;
+        font-family: 'Mountains of Christmas', cursive;
+        position: relative;
+    }
+
+    /* Border glow effect */
+    .start-quiz.clicked {
+        border-color: limegreen;
+        box-shadow: 0 0 15px 5px limegreen;
+        animation: glowBorder 1s infinite alternate;
+    }
+
+    @keyframes glowBorder {
+        0% { box-shadow: 0 0 10px 3px limegreen; }
+        50% { box-shadow: 0 0 20px 8px limegreen; }
+        100% { box-shadow: 0 0 10px 3px limegreen; }
+    }
+
+    /* Gifts cropped in center */
+    .gift-left, .gift-right {
         position: fixed;
         bottom: 20px;
-        left: 20px;
-        width: 150px;
-        height: auto;
+        width: 180px;
+        height: 150px;
+        overflow: hidden;
         z-index: 999;
     }
 
-    .gift-right {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 150px;
-        height: auto;
-        z-index: 999;
+    .gift-left img, .gift-right img {
+        width: auto;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
     }
+
+    .gift-left {
+        left: 20px;
+    }
+
+    .gift-right {
+        right: 20px;
+    }
+
 </style>
 </head>
 <body>
@@ -91,12 +134,19 @@
 
     <div class="content">
         <h1>Merry Christmas!</h1>
-        <p>May peace be your gift at christmas and your blessing all year through!</p>
+        <p>Welcome to our festive website.</p>
         <div id="countdown">Loading...</div>
+
+        <button class="start-quiz" onclick="startQuiz(this)">Take Quiz</button>
     </div>
 
-    <img src="gift 1.png" alt="Gift 1" class="gift-left">
-    <img src="gift 2.png" alt="Gift 2" class="gift-right">
+    <!-- Gifts with cropped center -->
+    <div class="gift-left">
+        <img src="gift 1.png" alt="Gift 1">
+    </div>
+    <div class="gift-right">
+        <img src="gift 2.png" alt="Gift 2">
+    </div>
 
 <script>
     function updateCountdown() {
@@ -120,6 +170,11 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
+
+    function startQuiz(btn) {
+        btn.classList.add('clicked');
+        alert('Quiz will start!');
+    }
 </script>
 
 </body>
