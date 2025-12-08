@@ -76,20 +76,24 @@
         font-weight: bold;
         color: white;
         background-color: red;
-        border: 3px solid transparent;
+        border: none;
         border-radius: 10px;
         cursor: pointer;
         text-shadow: 1px 1px 2px black;
-        transition: all 0.3s ease;
-        font-family: 'Mountains of Christmas', cursive;
-        position: relative;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
     }
 
-    /* Border glow effect */
+    .start-quiz:hover {
+        transform: scale(1.1);
+        background-color: darkred;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+    }
+
+    /* Button after clicked */
     .start-quiz.clicked {
-        border-color: limegreen;
-        box-shadow: 0 0 15px 5px limegreen;
-        animation: glowBorder 1s infinite alternate;
+        background-color: green;
+        box-shadow: 0 5px 15px rgba(0,128,0,0.7);
     }
 
     @keyframes glowBorder {
@@ -98,11 +102,11 @@
         100% { box-shadow: 0 0 10px 3px limegreen; }
     }
 
-    /* Gifts cropped in center */
+    /* Gifts cropped in center with 150px size */
     .gift-left, .gift-right {
         position: fixed;
-        bottom: 20px;
-        width: 180px;
+        bottom: 0;
+        width: 150px;
         height: 150px;
         overflow: hidden;
         z-index: 999;
@@ -112,16 +116,16 @@
         width: auto;
         height: 100%;
         object-fit: cover;
-        object-position: center;
+        object-position: center; /* show center part of image */
         display: block;
     }
 
     .gift-left {
-        left: 20px;
+        left: 10px;
     }
 
     .gift-right {
-        right: 20px;
+        right: 10px;
     }
 
 </style>
@@ -134,7 +138,7 @@
 
     <div class="content">
         <h1>Merry Christmas!</h1>
-        <p>Welcome to our festive website.</p>
+        <p>Celebrate, Laugh and enjoy the Season!</p>
         <div id="countdown">Loading...</div>
 
         <button class="start-quiz" onclick="startQuiz(this)">Take Quiz</button>
