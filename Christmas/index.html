@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christmas Welcome</title>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #222;
+
+        /* Background Image */
+        background-image: url('Background.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #d40000; /* Soft Christmas Red */
+        margin-bottom: 10px;
+    }
+
+    #countdown {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #0c7a35; /* Soft Christmas Green */
+        margin-top: 15px;
+        letter-spacing: 3px;
+    }
+
+    .start-btn {
+        margin-top: 35px;
+        padding: 14px 36px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        background: #d40000;
+        color: white;
+        transition: all 0.2s ease;
+    }
+
+    .start-btn:hover {
+        background: #b30000;
+        transform: scale(1.05);
+    }
+
+    /* Click animation class */
+    .start-btn.clicked {
+        background: #0c7a35;
+        transform: scale(0.95); /* slight shrink */
+        transition: all 0.15s ease;
+    }
+
+    /* Animate back to normal size quickly */
+    .start-btn.animate {
+        animation: clickBounce 0.3s forwards;
+    }
+
+    @keyframes clickBounce {
+        0% { transform: scale(1); }
+        50% { transform: scale(0.9); }
+        100% { transform: scale(1); }
+    }
+</style>
+</head>
+
+<body>
+
+<div>
+    <h1>🎄 Merry Christmas 🎄</h1>
+
+    <div id="countdown">-- : -- : -- : --</div>
+
+    <button id="startBtn" class="start-btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+<script>
+    // SIMPLE COUNTDOWN
+    function updateCountdown() {
+        const christmas = new Date("December 25, 2025 00:00:00");
+        const now = new Date();
+        const diff = christmas - now;
+
+        if (diff <= 0) {
+            document.getElementById("countdown").innerHTML =
+                "🎅 It's Christmas Day!";
+            return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / (1000 * 60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        const pad = (num) => num.toString().padStart(2, "0");
+
+        document.getElementById("countdown").innerHTML =
+            `${pad(d)} : ${pad(h)} : ${pad(m)} : ${pad(s)}`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // START QUIZ BUTTON FUNCTION
+    function startQuiz() {
+        const btn = document.getElementById("startBtn");
+
+        // Add click animation
+        btn.classList.add("animate");
+
+        // Change color to green
+        btn.classList.add("clicked");
+
+        // Remove animation class after animation ends
+        setTimeout(() => {
+            btn.classList.remove("animate");
+        }, 300);
+
+        // Redirect to quiz page after short delay
+        setTimeout(() => {
+            window.location.href = "quiz.html";
+        }, 400);
+    }
+</script>
+
+</body>
+</html>
+
+
+

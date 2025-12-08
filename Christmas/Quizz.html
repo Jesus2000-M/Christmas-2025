@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christmas Quiz</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background: white;
+        color: #222;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        text-align: center;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 600px;
+        padding: 20px 30px;
+        border-radius: 10px;
+    }
+
+    h1, h2 {
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        color: #d40000;
+        font-size: 2.5rem;
+    }
+
+    #welcome-screen p {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+        color: #0c7a35;
+    }
+
+    input {
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        width: 80%;
+    }
+
+    #startBtn {
+        padding: 12px 28px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background: #d40000;
+        color: white;
+        transition: 0.3s ease;
+    }
+
+    #startBtn:hover {
+        background: #b30000;
+    }
+
+    #question-screen {
+        display: none;
+    }
+
+    .question {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        color: #0c7a35;
+    }
+
+    .option-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #d40000;
+        color: white;
+        transition: 0.3s ease;
+    }
+
+    .option-btn:hover {
+        background: #b30000;
+        transform: scale(1.03);
+    }
+
+    #timer {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #0c7a35;
+    }
+
+    #result-screen {
+        display: none;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #0c7a35;
+    }
+
+    #result-screen button {
+        margin-top: 15px;
+        padding: 12px 28px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #d40000;
+        color: white;
+        font-size: 1rem;
+    }
+
+    #result-screen button:hover {
+        background: #b30000;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Welcome Screen -->
+    <div id="welcome-screen">
+        <h1>🎄 Christmas Quiz 🎄</h1>
+        <p>Enter your name to start the quiz:</p>
+        <input type="text" id="username" placeholder="Your Name">
+        <br>
+        <button id="startBtn" onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <!-- Quiz Questions -->
+    <div id="question-screen">
+        <h2>Question <span id="question-number"></span> / 10</h2>
+        <div id="timer">Time: 20s</div>
+        <div class="question" id="question-text"></div>
+        <div id="options"></div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen">
+        <div id="result"></div>
+        <button onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+
+</div>
+
+<script>
+const questions = [
+    {q: "Where was Jesus born?", options: ["Nazareth", "Bethlehem", "Jerusalem", "Galilee"], answer: "Bethlehem"},
+    {q: "Who visited Jesus at his birth?", options: ["Shepherds", "Soldiers", "Pharisees", "Tax collectors"], answer: "Shepherds"},
+    {q: "Which angel announced Jesus' birth to Mary?", options: ["Gabriel", "Michael", "Raphael", "Uriel"], answer: "Gabriel"},
+    {q: "What did the shepherds do when they heard the news?", options: ["Went to Bethlehem", "Ignored it", "Fled", "Prayed alone"], answer: "Went to Bethlehem"},
+    {q: "What gifts did the Wise Men bring?", options: ["Gold, Frankincense, Myrrh", "Gold, Silver, Bronze", "Gifts of Food", "Nothing"], answer: "Gold, Frankincense, Myrrh"},
+    {q: "Who was King during Jesus' birth?", options: ["Herod", "David", "Solomon", "Caesar Augustus"], answer: "Herod"},
+    {q: "What does 'Christmas' celebrate?", options: ["Birth of Jesus", "New Year", "Easter", "Harvest"], answer: "Birth of Jesus"},
+    {q: "Where did Joseph and Mary go for the census?", options: ["Bethlehem", "Nazareth", "Jerusalem", "Egypt"], answer: "Bethlehem"},
+    {q: "Which town did the shepherds come from?", options: ["Bethlehem", "Nazareth", "Judea", "Galilee"], answer: "Galilee"},
+    {q: "Who led the Wise Men to Jesus?", options: ["Star of Bethlehem", "Angel Gabriel", "Joseph", "Mary"], answer: "Star of Bethlehem"}
+];
+
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeLeft = 20;
+let username = "";
+
+function startQuiz() {
+    username = document.getElementById("username").value.trim();
+    if(username === "") {
+        alert("Please enter your name!");
+        return;
+    }
+    document.getElementById("welcome-screen").style.display = "none";
+    document.getElementById("question-screen").style.display = "block";
+    currentQuestion = 0;
+    score = 0;
+    showQuestion();
+}
+
+function showQuestion() {
+    if(currentQuestion >= questions.length) {
+        showResult();
+        return;
+    }
+
+    const q = questions[currentQuestion];
+    document.getElementById("question-number").textContent = currentQuestion + 1;
+    document.getElementById("question-text").textContent = q.q;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.classList.add("option-btn");
+        btn.textContent = option;
+        btn.onclick = () => checkAnswer(option);
+        optionsDiv.appendChild(btn);
+    });
+
+    timeLeft = 20;
+    document.getElementById("timer").textContent = `Time: ${timeLeft}s`;
+
+    clearInterval(timer);
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").textContent = `Time: ${timeLeft}s`;
+        if(timeLeft <= 0) {
+            clearInterval(timer);
+            currentQuestion++;
+            showQuestion();
+        }
+    }, 1000);
+}
+
+function checkAnswer(selected) {
+    clearInterval(timer);
+    if(selected === questions[currentQuestion].answer) {
+        score++;
+    }
+    currentQuestion++;
+    showQuestion();
+}
+
+function showResult() {
+    document.getElementById("question-screen").style.display = "none";
+    document.getElementById("result-screen").style.display = "block";
+    document.getElementById("result").textContent = `${username}, your score is ${score} / ${questions.length}`;
+}
+
+function restartQuiz() {
+    document.getElementById("result-screen").style.display = "none";
+    document.getElementById("welcome-screen").style.display = "block";
+    document.getElementById("username").value = "";
+}
+</script>
+
+</body>
+</html>
+
+
