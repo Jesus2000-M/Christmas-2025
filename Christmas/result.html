@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Candy+Canes&display=swap" rel="stylesheet">
+<style>
+body {
+    margin:0;
+    padding:18px;
+    font-family:Poppins,sans-serif;
+    text-align:center;
+    background: url('White Background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color:#0c5e31;
+}
+
+/* Score text */
+#scoreText {
+    color:#b30000;
+    font-size:28px;
+    margin-bottom:10px;
+    font-family:'Candy Canes', cursive;
+}
+
+/* Congratulatory text */
+#congratsText {
+    color:green;
+    font-size:22px;
+    margin-bottom:20px;
+    font-family:'Mountains of Christmas', cursive;
+    animation: bounceText 1s infinite;
+}
+
+/* Bounce animation for text */
+@keyframes bounceText {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Gift box */
+.gift-border {
+    width:150px;
+    height:150px;
+    border:4px solid #b30000;
+    margin:auto;
+    border-radius:12px;
+    background:#fff;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.gift-border img {
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+/* Buttons */
+.btn {
+    margin:10px;
+    padding:12px 26px;
+    border:none;
+    background:#b30000;
+    color:#fff;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:18px;
+}
+.btn:hover { background:#0c5e31; }
+</style>
+</head>
+<body>
+
+<div id="congratsText"></div>
+<h2 id="scoreText"></h2>
+
+<div class="gift-border" id="giftBox" title="Click if unlocked">
+    <img src="https://png.pngtree.com/png-clipart/20241102/original/pngtree-red-gift-boxes-with-gold-ribbons-clipart-png-image_16638572.png" alt="Gift">
+</div>
+
+<br>
+<button class="btn" onclick="window.location.href='scoreboard.html'">Scoreboard</button>
+<button class="btn" onclick="window.location.href='name.html'">Retake Quiz</button>
+
+<script>
+const score = parseInt(localStorage.getItem("lastScore") || 0);
+document.getElementById("scoreText").innerText = "🎉 You scored " + score;
+
+const congratsText = document.getElementById("congratsText");
+const giftBox = document.getElementById("giftBox");
+
+if(score >= 8){
+    congratsText.innerText = "🌟 Amazing! You scored high! 🌟";
+    giftBox.style.opacity = 1;
+    giftBox.style.pointerEvents = "auto";
+    giftBox.onclick = () => {
+        window.location.href = "gift-bounce.html";
+    };
+}else{
+    congratsText.innerText = "🎄 Merry Christmas! Keep trying!";
+    giftBox.style.display = "none"; // hide gift box if not unlocked
+}
+</script>
+
+</body>
+</html>

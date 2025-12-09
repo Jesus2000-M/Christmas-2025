@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scoreboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Candy+Canes&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+    margin:0;
+    padding:0;
+    font-family:'Roboto Slab', sans-serif;
+    background: url('White Background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color:#0c5e31;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    min-height:100vh;
+}
+
+/* Heading */
+h1 {
+    font-family:'Candy Canes', cursive;
+    font-size:3rem;
+    margin:40px 0 20px;
+    color:#b30000;
+    text-shadow: 1px 1px 3px #999;
+}
+
+/* Table styling */
+#scoreTable {
+    width: 90%;
+    max-width: 600px;
+    border-collapse: collapse;
+    text-align: center;
+    font-size:1.5rem;
+}
+
+#scoreTable th {
+    padding:12px 10px;
+    font-size:1.6rem;
+    border-bottom: 2px solid #b30000;
+    font-family:'Roboto Slab', serif;
+}
+
+/* Score rows */
+#scoreTable td {
+    padding:12px 5px;
+    font-weight:700;
+    font-size:1.4rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+#scoreTable tr:hover td {
+    transform: scale(1.03);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+/* Player name in different font */
+.playerName { font-family:'Roboto Slab', serif; font-weight:700; }
+
+/* Score in candy font */
+.playerScore { font-family:'Candy Canes', cursive; font-size:1.6rem; font-weight:700; }
+
+/* Back button */
+.btn {
+    margin:30px 0;
+    padding:15px 35px;
+    border:none;
+    background:#b30000;
+    color:#fff;
+    border-radius:25px;
+    font-size:1.2rem;
+    font-weight:700;
+    cursor:pointer;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+.btn:hover {
+    background:#0c5e31;
+    transform: scale(1.03);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+}
+</style>
+</head>
+<body>
+
+<h1>Top 10 Scores</h1>
+
+<table id="scoreTable">
+<tr>
+    <th>Rank</th>
+    <th>Name</th>
+    <th>Score</th>
+</tr>
+</table>
+
+<button class="btn" onclick="window.location.href='result.html'">Back</button>
+
+<script>
+// Retrieve scores
+let scores = JSON.parse(localStorage.getItem("quizScores") || "[]");
+scores.sort((a,b)=>b.score - a.score);
+scores = scores.slice(0,10);
+
+const table = document.getElementById("scoreTable");
+
+if(scores.length === 0){
+    const tr = document.createElement("tr");
+    tr.innerHTML = '<td colspan="3">No scores yet!</td>';
+    table.appendChild(tr);
+} else {
+    scores.forEach((s,i)=>{
+        const tr = document.createElement("tr");
+        const color = i%2===0 ? "green" : "red"; // alternate text color
+        tr.innerHTML = `<td class="playerScore" style="color:${color}">${i+1}</td>
+                        <td class="playerName" style="color:${color}">${s.name}</td>
+                        <td class="playerScore" style="color:${color}">${s.score}</td>`;
+        table.appendChild(tr);
+    });
+}
+</script>
+
+</body>
+</html>
