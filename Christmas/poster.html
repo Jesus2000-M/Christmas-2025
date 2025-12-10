@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christmas Greeting Card</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('White Background.jpg') no-repeat center center;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+}
+
+/* Semi-transparent overlay for readability */
+body::before {
+    content: "";
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 0;
+}
+
+.card {
+    width: 100%;
+    max-width: calc(100% - 20px); /* 10px gap each side */
+    aspect-ratio: 16/9;
+    background: #ffffff;
+    border-radius: 10px;
+    border-right: 2px groove #d32f2f;
+    border-bottom: 2px groove #d32f2f;
+    border-left: 2px groove #0c5e31;
+    border-top: 2px groove #0c5e31;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    padding: 30px 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom right, rgba(255,255,255,0.95), rgba(255,240,240,0.95));
+    margin: 0 10px; /* Horizontal gap */
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #d32f2f, #0c5e31); /* red to green gradient */
+    -webkit-background-clip: text;  /* Chrome, Safari */
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* Firefox */
+    color: transparent;
+    text-align: center;
+}
+
+p {
+    font-size: 18px;
+    color: #0c5e31;
+    line-height: 1.5;
+    padding: 0 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+    .card {
+        padding: 20px;
+    }
+    h2 {
+        font-size: 24px;
+    }
+    p {
+        font-size: 16px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h2 id="titleText">Merry Christmas!</h2>
+    <p id="wishText"></p>
+</div>
+
+<script>
+// Get username from localStorage
+const username = localStorage.getItem('playerName') || "Friend";
+document.getElementById("titleText").innerText = "Merry Christmas, " + username + "!";
+
+// List of wishes
+const wishes = [
+    "May the love of Christ fill your heart with peace and joy.",
+    "Wishing you a blessed Christmas, surrounded by God’s grace and mercy.",
+    "May the light of Jesus shine upon you and guide you with hope and faith.",
+    "May God bless you with happiness, health, and abundant love this Christmas.",
+    "May the miracle of Christ’s birth bring you everlasting joy and blessings."
+];
+
+// Check if a wish was already saved
+let randomWish = localStorage.getItem('chosenWish');
+
+if(!randomWish) {
+    // Pick a random wish and store it
+    randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+    localStorage.setItem('chosenWish', randomWish);
+}
+
+// Display the wish
+document.getElementById("wishText").innerText = randomWish;
+</script>
+
+</body>
+</html>
