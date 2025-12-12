@@ -10,36 +10,98 @@
     body{
         height:100vh; overflow:hidden;
         background-image:url('White Background.jpg');
-        background-size:cover;background-position:center;
-        font-family:'Mountains of Christmas',cursive;color:#fff;
+        background-size:cover;
+        background-position:center;
+        font-family:'Mountains of Christmas',cursive;
+        color:#fff;
         position:relative;
     }
-    .top-decoration-container{width:100%;height:200px;display:flex;justify-content:center;align-items:center;overflow:hidden;}
-    .top-decoration{width:100%;height:auto;object-fit:cover;display:block;}
-    .content{text-align:center;margin-top:20px;}
-    h1{font-size:3rem;color:red;text-shadow:2px 2px 4px #000;}
-    p{font-size:1.5rem;color:green;text-shadow:2px 2px 4px #000;}
-    #countdown{margin-top:25px;font-size:2rem;font-weight:bold;color:red;text-shadow:1px 1px 3px green;}
+    .top-decoration-container{
+        width:100%;
+        height:200px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        overflow:hidden;
+    }
+    .top-decoration{
+        width:100%;
+        height:auto;
+        object-fit:cover;
+        display:block;
+    }
+    .content{
+        text-align:center;
+        margin-top:20px;
+        z-index:1;
+        position:relative;
+    }
+    h1{
+        font-size:3rem;
+        color:red;
+        text-shadow:2px 2px 4px #000;
+    }
+    p{
+        font-size:1.5rem;
+        color:green;
+        text-shadow:2px 2px 4px #000;
+    }
+    #countdown{
+        margin-top:25px;
+        font-size:2rem;
+        font-weight:bold;
+        color:red;
+        text-shadow:1px 1px 3px green;
+    }
     .start-quiz{
-        margin-top:30px;padding:15px 40px;font-size:1.5rem;font-weight:bold;
-        color:white;background-color:red;border:none;border-radius:10px;
-        cursor:pointer;text-shadow:1px 1px 2px black;
+        margin-top:30px;
+        padding:15px 40px;
+        font-size:1.5rem;
+        font-weight:bold;
+        color:white;
+        background-color:red;
+        border:none;
+        border-radius:10px;
+        cursor:pointer;
+        text-shadow:1px 1px 2px black;
         box-shadow:0 5px 15px rgba(0,0,0,0.5);
         transition:transform 0.2s,background-color 0.2s,box-shadow 0.2s;
     }
-    .start-quiz:hover{transform:scale(1.1);background-color:darkred;box-shadow:0 8px 25px rgba(0,0,0,0.7);}
-    .start-quiz.clicked{background-color:green;box-shadow:0 5px 15px rgba(0,128,0,0.7);}
-    .gift-left,.gift-right{position:fixed;bottom:0;width:150px;height:150px;overflow:hidden;z-index:999;}
-    .gift-left img,.gift-right img{width:auto;height:100%;object-fit:cover;display:block;}
-    .gift-left{left:10px;} .gift-right{right:10px;}
+    .start-quiz:hover{
+        transform:scale(1.1);
+        background-color:darkred;
+        box-shadow:0 8px 25px rgba(0,0,0,0.7);
+    }
+    .start-quiz.clicked{
+        background-color:green;
+        box-shadow:0 5px 15px rgba(0,128,0,0.7);
+    }
+    .gift-left,.gift-right{
+        position:fixed;
+        bottom:0;
+        width:150px;
+        height:150px;
+        overflow:hidden;
+        z-index:999;
+    }
+    .gift-left img,.gift-right img{
+        width:auto;
+        height:100%;
+        object-fit:cover;
+        display:block;
+    }
+    .gift-left{left:10px;}
+    .gift-right{right:10px;}
 </style>
 </head>
 <body>
 
+<!-- Top Decoration -->
 <div class="top-decoration-container">
     <img src="decoration.png" alt="Decoration" class="top-decoration">
 </div>
 
+<!-- Main Content -->
 <div class="content">
     <h1>Merry Christmas!</h1>
     <p>Celebrate, Laugh and Enjoy the Season!</p>
@@ -47,26 +109,37 @@
     <button class="start-quiz" onclick="goToQuiz(this)">Take Quiz</button>
 </div>
 
-<div class="gift-left"><img src="gift 1.png" alt="Gift 1"></div>
-<div class="gift-right"><img src="gift 2.png" alt="Gift 2"></div>
+<!-- Gifts on sides -->
+<div class="gift-left"><img src="gift1.png" alt="Gift 1"></div>
+<div class="gift-right"><img src="gift2.png" alt="Gift 2"></div>
 
 <script>
 function updateCountdown(){
     const christmas = new Date("December 25, 2025 00:00:00").getTime();
     const now = new Date().getTime();
     const diff = christmas - now;
-    if(diff <= 0){document.getElementById("countdown").innerHTML="🎄 00 : 00 : 00 : 00 🎅"; return;}
-    const days=Math.floor(diff/(1000*60*60*24));
-    const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-    const minutes=Math.floor((diff%(1000*60*60))/(1000*60));
-    const seconds=Math.floor((diff%(1000*60))/1000);
-    document.getElementById("countdown").innerHTML=days+" : "+hours+" : "+minutes+" : "+seconds;
+
+    if(diff <= 0){
+        document.getElementById("countdown").innerHTML="🎄 00 : 00 : 00 : 00 🎅";
+        return;
+    }
+
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+    const seconds = Math.floor((diff % (1000*60)) / 1000);
+
+    document.getElementById("countdown").innerHTML = 
+        days + " : " + hours + " : " + minutes + " : " + seconds;
 }
-setInterval(updateCountdown,1000); updateCountdown();
+
+// Update every second
+setInterval(updateCountdown,1000);
+updateCountdown();
 
 function goToQuiz(btn){
-    btn.classList.add('clicked');
-    window.location.href="name.html";
+    btn.classList.add('clicked'); // Optional effect
+    setTimeout(()=>{window.location.href="name.html";}, 200); // Slight delay for effect
 }
 </script>
 

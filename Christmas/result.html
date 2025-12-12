@@ -5,42 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Result & Feedback</title>
 <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Roboto:wght@400;500&family=Candy+Canes&display=swap" rel="stylesheet">
-<style>
-body {
-    margin:0;
-    padding:18px;
-    font-family:Poppins,sans-serif;
-    text-align:center;
-    background: url('White Background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color:#0c5e31;
-}
 
+<style>
+body { margin:0; padding:18px; font-family:Poppins,sans-serif; text-align:center; background: url('White Background.jpg') no-repeat center center fixed; background-size: cover; color:#0c5e31; }
 #scoreText { color:#b30000; font-size:28px; margin-bottom:10px; font-family:'Candy Canes', cursive; }
 #congratsText { color:green; font-size:22px; margin-bottom:20px; font-family:'Mountains of Christmas', cursive; }
-
-.gift-border {
-    width:150px; height:150px; border:4px solid #b30000;
-    margin:auto; border-radius:10px; background:#fff; cursor:pointer;
-    display:flex; justify-content:center; align-items:center; margin-bottom:20px;
-}
+.gift-border { width:150px; height:150px; border:4px solid #b30000; margin:auto; border-radius:10px; background:#fff; cursor:pointer; display:flex; justify-content:center; align-items:center; margin-bottom:20px; }
 .gift-border img { width:100%; height:100%; display:block; }
-
-.btn { margin:10px; padding:12px 26px; border:none; background:#b30000;
-    color:#fff; border-radius:10px; cursor:pointer; font-size:18px; }
+.btn { margin:10px; padding:12px 26px; border:none; background:#b30000; color:#fff; border-radius:10px; cursor:pointer; font-size:18px; }
 .btn:hover { background:#0c5e31; }
-
-form { display:flex; flex-direction:column; gap:20px; width:90%; max-width:450px; margin:20px auto; }
-
-.emoji-rating { display:flex; justify-content:space-around; font-size:2.5rem; cursor:pointer; align-items:center; }
+form { display:flex; flex-direction:column; gap:20px; width:100%; max-width:450px; margin:20px auto; align-items:center; }
+textarea { width:100%; padding:12px; border-radius:10px; border:2px solid #388e3c; font-size:16px; font-family:inherit; resize:vertical; box-sizing:border-box; transition:border-color 0.3s; }
+.emoji-rating { display:flex; gap:20px; justify-content:space-around; font-size:2.5rem; cursor:pointer; align-items:center; }
 .emoji-rating input { display:none; }
-.emoji-rating label { transition: transform 0.2s, filter 0.2s; }
+.emoji-rating label { transition:transform 0.2s, filter 0.2s; }
 .emoji-rating label:hover { transform:scale(1.4); filter:brightness(1.2); }
-.emoji-rating input:checked + label { transform:scale(1.4); filter:brightness(1.2); text-shadow:0 0 10px #d32f2f,0 0 20px #388e3c; }
-#rating-text { font-size:1.2rem; font-weight:bold; color:#d32f2f; margin-left:10px; }
-
-textarea { width:100%; padding:12px; border-radius:10px; border:2px solid #388e3c; font-size:16px; font-family:inherit; resize:vertical; }
-button[type="submit"] { background:linear-gradient(90deg,#d32f2f,#388e3c); color:#fff; border:none; border-radius:10px; padding:12px; font-size:18px; font-weight:500; cursor:pointer; transition: transform 0.2s; }
+.emoji-rating input:checked + label { transform:scale(1.4); filter:brightness(1.4); text-shadow:0 0 10px #d32f2f,0 0 20px #388e3c; }
+button[type="submit"] { background:linear-gradient(90deg,#d32f2f,#388e3c); color:#fff; border:none; border-radius:10px; padding:12px; font-size:18px; font-weight:500; cursor:pointer; transition:transform 0.2s; }
 button[type="submit"]:hover { transform:scale(1.05); }
 </style>
 </head>
@@ -49,34 +30,22 @@ button[type="submit"]:hover { transform:scale(1.05); }
 <div id="congratsText"></div>
 <h2 id="scoreText"></h2>
 
-<div class="gift-border" id="giftBox" title="Click if unlocked">
+<div class="gift-border" id="giftBox" title="Click to open your Christmas gift! 🎁">
     <img src="https://png.pngtree.com/png-clipart/20241102/original/pngtree-red-gift-boxes-with-gold-ribbons-clipart-png-image_16638572.png" alt="Gift">
 </div>
 
 <button class="btn" onclick="window.location.href='scoreboard.html'">Scoreboard</button>
 <button class="btn" onclick="window.location.href='name.html'">Retake Quiz</button>
 
-<form id="feedbackForm" method="post" action="save_feedback.php">
+<form id="feedbackForm" method="post">
   <div class="emoji-rating">
-    <input type="radio" id="love" name="rating" value="5" required>
-    <label for="love" data-text="Excellent">🤩</label>
-
-    <input type="radio" id="happy" name="rating" value="4">
-    <label for="happy" data-text="Good">😊</label>
-
-    <input type="radio" id="neutral" name="rating" value="3">
-    <label for="neutral" data-text="Okay">😐</label>
-
-    <input type="radio" id="sad" name="rating" value="2">
-    <label for="sad" data-text="Not Bad">😕</label>
-
-    <input type="radio" id="angry" name="rating" value="1">
-    <label for="angry" data-text="Bad">😡</label>
-
-    <span id="rating-text"></span>
+    <input type="radio" id="love" name="rating" value="5" required><label for="love">🤩</label>
+    <input type="radio" id="happy" name="rating" value="4"><label for="happy">😊</label>
+    <input type="radio" id="neutral" name="rating" value="3"><label for="neutral">😐</label>
+    <input type="radio" id="sad" name="rating" value="2"><label for="sad">😕</label>
+    <input type="radio" id="angry" name="rating" value="1"><label for="angry">😡</label>
   </div>
-
-  <textarea name="message" rows="5" placeholder="Write your message..." required></textarea>
+  <textarea name="message" id="messageBox" rows="5" placeholder="Write your message..." required></textarea>
   <input type="hidden" name="score" id="scoreInput" value="">
   <button type="submit">Send Feedback</button>
 </form>
@@ -85,34 +54,37 @@ button[type="submit"]:hover { transform:scale(1.05); }
 const score = parseInt(localStorage.getItem("lastScore") || 0);
 document.getElementById("scoreText").innerText = "You scored " + score;
 document.getElementById("scoreInput").value = score;
+document.getElementById("congratsText").innerText = "Congratulations! You’ve unlocked the Christmas gift! 🎁";
 
-const congratsText = document.getElementById("congratsText");
-const giftBox = document.getElementById("giftBox");
+document.getElementById("giftBox").onclick = () => {
+    window.location.href = "gift-bounce.html";
+};
 
-if(score >= 8){
-    congratsText.innerText = "Congratulations! You’ve unlocked the gift! 🎁";
-    giftBox.style.opacity = 1;
-    giftBox.style.pointerEvents = "auto";
-    giftBox.onclick = () => {
-        window.location.href = "gift-bounce.html";
-    };
-}else{
-    congratsText.innerText = "Merry Christmas! Keep trying! 🎄";
-    giftBox.style.display = "none";
-}
+const form = document.getElementById("feedbackForm");
+const playerName = localStorage.getItem("playerName") || "Guest";
 
-// Emoji labels show text
-const labels = document.querySelectorAll('.emoji-rating label');
-const ratingText = document.getElementById('rating-text');
-labels.forEach(label => {
-  label.addEventListener('click', () => {
-    ratingText.textContent = label.dataset.text;
-  });
+form.addEventListener("submit", function(e){
+    e.preventDefault();
+    const formData = new FormData(form);
+    formData.append("name", playerName);
+    formData.append("score", score);
+
+    // ✅ Send feedback to InfinityFree
+    fetch("https://Millinda.rf.gd/save_feedback.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.text())
+    .then(data => { alert("Thank you for your feedback!"); form.reset(); })
+    .catch(err => alert("Error submitting feedback!"));
+});
+
+// Prevent back button → redirect to index.html
+history.pushState(null, "", location.href);
+window.addEventListener("popstate", function () {
+    window.location.href = "index.html";
 });
 </script>
+
 </body>
 </html>
-
-
-
-

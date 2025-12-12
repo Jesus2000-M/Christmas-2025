@@ -6,129 +6,18 @@
 <title>Enter Name</title>
 <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body {
-    margin:0; padding:18px;
-    font-family:Poppins,sans-serif;
-    color:#0c5e31;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    text-align:center;
-
-    /* Background image */
-    background-image: url('White Background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-/* Optional: add a semi-transparent overlay so text is readable */
-body::before {
-    content: "";
-    position: absolute;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(255, 250, 248, 0.5);
-    z-index:0;
-}
-
-/* Heading */
-h2{
-    font-family:"Mountains of Christmas", cursive;
-    color:#b30000;
-    font-size:34px;
-    margin-bottom:12px;
-    position: relative;
-    z-index:1;
-}
-
-/* Input */
-input[type="text"]{
-    width:86%;
-    padding:12px;
-    border-radius:12px;
-    border:none;
-    background:#f1fff4;
-    font-size:18px;
-    margin-bottom:18px;
-    outline:none;
-    position: relative;
-    z-index:1;
-}
-/* Button */
-.btn{
-    padding:12px 26px;
-    font-size:18px;
-    border-radius:10px;
-    border:none;
-    cursor:pointer;
-    color:#fff;
-    background-color: #b30000;
-    font-weight:700;
-    position: relative;
-    z-index:1;
-}
-.btn:hover{
-    background:#0c5e31;
-}
-
-/* Gift container */
-.gift-container{
-    position:relative;
-    width:180px;
-    height:180px;
-    margin:20px 0;
-    z-index:1;
-}
-
-/* Gift image */
-.gift-border{
-    width:100%;
-    height:100%;
-    border:4px solid #b30000;
-    border-radius:12px;
-    overflow:hidden;
-    background:#fff;
-    position:relative;
-}
-.gift-border img{
-    width:100%;
-    height:100%;
-    display:block;
-    transition: filter 0.3s ease;
-}
-
-/* Blur effect when locked */
-.gift-border.locked img{
-    filter: blur(6px);
-}
-
-/* Centered lock icon */
-.lock-badge{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    width:50px;
-    height:50px;
-    background:rgba(0,0,0,0.6);
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    font-size:24px;
-    pointer-events:none;
-}
-
-p{
-    color:#b30000;
-    margin-top:12px;
-    font-weight:bold;
-    position: relative;
-    z-index:1;
-}
+body { margin:0; padding:18px; font-family:Poppins,sans-serif; color:#0c5e31; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; background-image: url('White Background.jpg'); background-size: cover; background-position: center; }
+body::before { content:""; position:absolute; top:0; left:0; right:0; bottom:0; background: rgba(255,250,248,0.5); z-index:0; }
+h2 { font-family:"Mountains of Christmas", cursive; color:#b30000; font-size:34px; margin-bottom:12px; position: relative; z-index:1; }
+input[type="text"] { width:86%; padding:12px; border-radius:12px; border:none; background:#f1fff4; font-size:18px; margin-bottom:18px; outline:none; position: relative; z-index:1; }
+.btn { padding:12px 26px; font-size:18px; border-radius:10px; border:none; cursor:pointer; color:#fff; background-color:#b30000; font-weight:700; position: relative; z-index:1; }
+.btn:hover { background:#0c5e31; }
+.gift-container { position:relative; width:180px; height:180px; margin:20px 0; z-index:1; }
+.gift-border { width:100%; height:100%; border:4px solid #b30000; border-radius:12px; overflow:hidden; background:#fff; position:relative; }
+.gift-border img { width:100%; height:100%; display:block; transition: transform 0.3s ease; }
+.gift-border.locked img { filter: blur(6px); }
+.lock-badge { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:50px; height:50px; background:rgba(0,0,0,0.6); color:#fff; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:24px; pointer-events:none; }
+p { color:#b30000; margin-top:12px; font-weight:bold; position: relative; z-index:1; }
 </style>
 </head>
 <body>
@@ -138,14 +27,13 @@ p{
 <input type="text" id="nameInput" placeholder="Enter your name" />
 <br>
 
-<!-- Gift box with blur when locked -->
 <div class="gift-container">
     <div class="gift-border locked" id="startGift">
         <img src="https://png.pngtree.com/png-clipart/20241102/original/pngtree-red-gift-boxes-with-gold-ribbons-clipart-png-image_16638572.png" alt="gift">
         <div class="lock-badge" id="startLock">🔒</div>
     </div>
 </div>
-<p>Score 8 or more in the quiz to unlock this gift.</p>
+<p>Take the quiz and unlock the gift.</p>
 <br>
 <button class="btn" onclick="startQuiz()">Start Quiz</button>
 
@@ -153,11 +41,23 @@ p{
 function startQuiz(){
     const name = document.getElementById('nameInput').value.trim();
     if(!name){ alert('Please enter your name'); return; }
-    localStorage.setItem('playerName', name);
-    window.location.href = "quiz.html";
+
+    // ✅ Send name to InfinityFree
+    fetch('https://Millinda.rf.gd/save_player.php', {
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:'playerName=' + encodeURIComponent(name)
+    })
+    .then(res=>res.text())
+    .then(data=>{
+        console.log(data);
+        localStorage.setItem('playerName', name);
+        window.location.href = "quiz.html"; // Go to quiz page
+    })
+    .catch(err=>{ alert('Failed to save name'); console.error(err); });
 }
 
-// On load: check top score and unlock gift
+// Unlock gift if top score >=8
 window.addEventListener('load', ()=>{
     const arr = JSON.parse(localStorage.getItem('quizScores') || '[]');
     const topScore = (arr.length && arr[0].score) ? arr[0].score : 0;
@@ -165,11 +65,11 @@ window.addEventListener('load', ()=>{
     const startLock = document.getElementById('startLock');
 
     if(topScore >= 8){
-        startGift.classList.remove('locked');  // remove blur
+        startGift.classList.remove('locked');
         startLock.textContent = '🔓';
         startLock.style.background = 'rgba(0,200,0,0.8)';
     } else {
-        startGift.classList.add('locked');     // keep blur
+        startGift.classList.add('locked');
         startLock.textContent = '🔒';
         startLock.style.background = 'rgba(0,0,0,0.6)';
     }
@@ -178,5 +78,3 @@ window.addEventListener('load', ()=>{
 
 </body>
 </html>
-
-
