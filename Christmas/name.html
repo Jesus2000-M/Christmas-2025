@@ -43,7 +43,7 @@ function startQuiz(){
     if(!name){ alert('Please enter your name'); return; }
 
     // ✅ Send name to InfinityFree
-    fetch('https://Millinda.rf.gd/save_player.php', {
+    fetch('https://millinda.rf.gd/save_player.php', {
         method:'POST',
         headers:{'Content-Type':'application/x-www-form-urlencoded'},
         body:'playerName=' + encodeURIComponent(name)
