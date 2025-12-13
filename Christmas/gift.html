@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bouncing Gift</title>
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Poppins, sans-serif;
+    text-align: center;
+    background-size: cover;
+    background-color: #f0f8ff; /* fallback color */
+    color: #0c5e31;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Instruction text */
+#clickText {
+    font-family: 'Mountains of Christmas', cursive;
+    font-size: 2.2rem;
+    color: #b30000;
+    margin-top: 30px;
+    text-shadow: 1px 1px 3px #fff;
+}
+
+/* Bouncing gift */
+.gift-bounce {
+    width: 400px;  /* bigger gift */
+    height: 400px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: bounce 1s infinite;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.gift-bounce img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); } /* bigger bounce */
+}
+
+/* Responsive */
+@media(max-width: 500px){
+    .gift-bounce {
+        width: 250px;
+        height: 250px;
+    }
+    #clickText {
+        font-size: 1.6rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="gift-bounce">
+   <a href="poster.html"><img src="gift.png" alt="Gift Inside"></a>
+</div>
+<div id="clickText">Click the gift to open it!</div>
+
+</body>
+</html>

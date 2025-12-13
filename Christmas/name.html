@@ -4,74 +4,161 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enter Name</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-body { margin:0; padding:18px; font-family:Poppins,sans-serif; color:#0c5e31; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; background-image: url('White Background.jpg'); background-size: cover; background-position: center; }
-body::before { content:""; position:absolute; top:0; left:0; right:0; bottom:0; background: rgba(255,250,248,0.5); z-index:0; }
-h2 { font-family:"Mountains of Christmas", cursive; color:#b30000; font-size:34px; margin-bottom:12px; position: relative; z-index:1; }
-input[type="text"] { width:86%; padding:12px; border-radius:12px; border:none; background:#f1fff4; font-size:18px; margin-bottom:18px; outline:none; position: relative; z-index:1; }
-.btn { padding:12px 26px; font-size:18px; border-radius:10px; border:none; cursor:pointer; color:#fff; background-color:#b30000; font-weight:700; position: relative; z-index:1; }
-.btn:hover { background:#0c5e31; }
-.gift-container { position:relative; width:180px; height:180px; margin:20px 0; z-index:1; }
-.gift-border { width:100%; height:100%; border:4px solid #b30000; border-radius:12px; overflow:hidden; background:#fff; position:relative; }
-.gift-border img { width:100%; height:100%; display:block; transition: transform 0.3s ease; }
-.gift-border.locked img { filter: blur(6px); }
-.lock-badge { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:50px; height:50px; background:rgba(0,0,0,0.6); color:#fff; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:24px; pointer-events:none; }
-p { color:#b30000; margin-top:12px; font-weight:bold; position: relative; z-index:1; }
+body{
+    margin:0;
+    padding:18px;
+    font-family:Poppins,sans-serif;
+    color:#0c5e31;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    text-align:center;
+    background:url('White Background.jpg') center/cover no-repeat;
+}
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(255,250,248,0.5);
+    z-index:0;
+}
+h2{
+    font-family:"Mountains of Christmas",cursive;
+    color:#b30000;
+    font-size:34px;
+    margin-bottom:12px;
+    position:relative;
+    z-index:1;
+}
+input{
+    width:86%;
+    max-width:320px;
+    padding:12px;
+    border-radius:12px;
+    border:none;
+    background:#f1fff4;
+    font-size:18px;
+    margin-bottom:18px;
+    outline:none;
+    position:relative;
+    z-index:1;
+}
+.btn{
+    padding:12px 26px;
+    font-size:18px;
+    border-radius:10px;
+    border:none;
+    cursor:pointer;
+    color:#fff;
+    background:#b30000;
+    font-weight:700;
+    position:relative;
+    z-index:1;
+}
+.btn:hover{ background:#0c5e31; }
+
+.gift-container{
+    width:180px;
+    height:180px;
+    margin:20px 0;
+    position:relative;
+    z-index:1;
+}
+.gift-border{
+    width:100%;
+    height:100%;
+    border:4px solid #b30000;
+    border-radius:12px;
+    overflow:hidden;
+    background:#fff;
+}
+.gift-border.locked img{ filter:blur(6px); }
+.gift-border img{
+    width:100%;
+    height:100%;
+}
+.lock-badge{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:50px;
+    height:50px;
+    background:rgba(0,0,0,0.6);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    font-size:24px;
+}
+p{
+    color:#b30000;
+    font-weight:bold;
+    position:relative;
+    z-index:1;
+}
 </style>
 </head>
+
 <body>
 
-<h2>Christmas Quiz</h2>
+<h2>🎄 Christmas Quiz</h2>
 
-<input type="text" id="nameInput" placeholder="Enter your name" />
-<br>
+<input type="text" id="nameInput" placeholder="Enter your name" maxlength="20">
 
 <div class="gift-container">
     <div class="gift-border locked" id="startGift">
-        <img src="https://png.pngtree.com/png-clipart/20241102/original/pngtree-red-gift-boxes-with-gold-ribbons-clipart-png-image_16638572.png" alt="gift">
+        <img src="https://png.pngtree.com/png-clipart/20241102/original/pngtree-red-gift-boxes-with-gold-ribbons-clipart-png-image_16638572.png">
         <div class="lock-badge" id="startLock">🔒</div>
     </div>
 </div>
-<p>Take the quiz and unlock the gift.</p>
-<br>
+
+<p>Take the quiz and unlock the gift</p>
+
 <button class="btn" onclick="startQuiz()">Start Quiz</button>
 
 <script>
 function startQuiz(){
-    const name = document.getElementById('nameInput').value.trim();
-    if(!name){ alert('Please enter your name'); return; }
+    const name = document.getElementById("nameInput").value.trim();
+    if(name === ""){
+        alert("Please enter your name");
+        return;
+    }
 
-    // ✅ Send name to InfinityFree
-    fetch('https://millinda.rf.gd/save_player.php', {
-        method:'POST',
-        headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        body:'playerName=' + encodeURIComponent(name)
+    fetch("https://millinda.rf.gd/save_player.php",{
+        method:"POST",
+        headers:{"Content-Type":"application/x-www-form-urlencoded"},
+        body:"playerName=" + encodeURIComponent(name)
     })
-    .then(res=>res.text())
-    .then(data=>{
-        console.log(data);
-        localStorage.setItem('playerName', name);
-        window.location.href = "quiz.html"; // Go to quiz page
+    .then(r => r.json())
+    .then(d => {
+        if(d.status === "success"){
+            localStorage.setItem("playerName", name);
+            window.location.href = "quiz.html";
+        } else {
+            alert("Failed to save name");
+        }
     })
-    .catch(err=>{ alert('Failed to save name'); console.error(err); });
+    .catch(()=> alert("Server error"));
 }
 
-// Unlock gift if top score >=8
-window.addEventListener('load', ()=>{
-    const arr = JSON.parse(localStorage.getItem('quizScores') || '[]');
-    const topScore = (arr.length && arr[0].score) ? arr[0].score : 0;
-    const startGift = document.getElementById('startGift');
-    const startLock = document.getElementById('startLock');
+// 🎁 Visual unlock only
+window.addEventListener("load", ()=>{
+    const scores = JSON.parse(localStorage.getItem("quizScores") || "[]");
+    let top = 0;
+    scores.forEach(s => { if(s.score > top) top = s.score; });
 
-    if(topScore >= 8){
-        startGift.classList.remove('locked');
-        startLock.textContent = '🔓';
-        startLock.style.background = 'rgba(0,200,0,0.8)';
-    } else {
-        startGift.classList.add('locked');
-        startLock.textContent = '🔒';
-        startLock.style.background = 'rgba(0,0,0,0.6)';
+    if(top >= 8){
+        document.getElementById("startGift").classList.remove("locked");
+        document.getElementById("startLock").textContent = "🔓";
+        document.getElementById("startLock").style.background="rgba(0,200,0,.8)";
     }
 });
 </script>
